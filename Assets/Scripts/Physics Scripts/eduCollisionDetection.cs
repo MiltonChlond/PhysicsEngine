@@ -10,9 +10,9 @@ public class eduCollisionDetection : MonoBehaviour
 
     void Start()
     {
-        circleCol = FindObjectsByType<eduCircleCollider>();
-        lineSegCol = FindObjectsByType<eduLineSegmentCollider>();
-        planeCol = FindObjectsByType<eduPlaneCollider>();
+        circleCol = FindObjectsByType<eduCircleCollider>(FindObjectsSortMode.None);
+        lineSegCol = FindObjectsByType<eduLineSegmentCollider>(FindObjectsSortMode.None);
+        planeCol = FindObjectsByType<eduPlaneCollider>(FindObjectsSortMode.None);
     }
 
     void FixedUpdate()

@@ -19,7 +19,7 @@ public class eduPlaneCollider : MonoBehaviour
     void Update()
     {
         Debug.DrawLine(pos, pos + normal, Color.white); //showcase normal
-        Debug.DrawLine(pos, pos + (Vector2)transform.right * size/2, Color.purple);
-        Debug.DrawLine(pos, pos + (Vector2)(-transform.right * size/2), Color.purple);
+        Debug.DrawLine(pos, pos + (Vector2)transform.right * size/2, Color.magenta);
+        Debug.DrawLine(pos, pos + (Vector2)(-transform.right * size/2), Color.magenta);
     }
 }

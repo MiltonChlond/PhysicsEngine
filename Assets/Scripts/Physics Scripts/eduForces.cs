@@ -44,10 +44,10 @@ public class eduForces : MonoBehaviour
 
     void FixedUpdate()
     {
-        eduRigidBody[] RBs = FindObjectsByType<eduRigidBody>();
-        eduWindField[] windFields = FindObjectsByType<eduWindField>();
-        eduBuoyanceField[] buoyanceFields = FindObjectsByType<eduBuoyanceField>();
-        eduExplosionPoint[] explosionPoints = FindObjectsByType<eduExplosionPoint>();
+        eduRigidBody[] RBs = FindObjectsByType<eduRigidBody>(FindObjectsSortMode.None);
+        eduWindField[] windFields = FindObjectsByType<eduWindField>(FindObjectsSortMode.None);
+        eduBuoyanceField[] buoyanceFields = FindObjectsByType<eduBuoyanceField>(FindObjectsSortMode.None);
+        eduExplosionPoint[] explosionPoints = FindObjectsByType<eduExplosionPoint>(FindObjectsSortMode.None);
         foreach(eduRigidBody rb in RBs)
         {
             if(gravityEnabled)

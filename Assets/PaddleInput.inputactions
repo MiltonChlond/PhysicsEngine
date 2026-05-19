@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "PaddleInput",
+    "maps": [
+        {
+            "name": "Paddle",
+            "id": "ecfc08be-f9de-42e5-9ae2-6cabde8883ad",
+            "actions": [
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "02cfe5ec-c7e5-40c8-a5d6-812e7271b404",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "d39430c7-6549-4854-b724-dfcfdf1e7ea5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d4b9524d-53ae-4c1c-ad7c-1445dd2bd1e7",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb22fc58-e988-408c-96b9-2b760e6aab23",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

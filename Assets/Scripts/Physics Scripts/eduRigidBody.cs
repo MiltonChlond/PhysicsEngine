@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class eduRigidBody : MonoBehaviour
 {
-    [SerializeField] public Vector2 velocity;
+    [SerializeField] public Vector2 velocity = Vector3.zero;
     [SerializeField] public float angularVelocity;
 
     [SerializeField] Vector2 F;
@@ -19,11 +19,10 @@ public class eduRigidBody : MonoBehaviour
     int frame;
 
     //exercise 1.4 and 1.5
-    bool angularVelReachedzero = false;
+    //bool angularVelReachedzero = false;
 
     void Start()
     {
-        velocity = Vector2.zero;
         angularVelocity = 0;
         frame = 0;
         //cor

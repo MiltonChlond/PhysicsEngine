@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -97,9 +98,10 @@ public class eduCollisionDetection : MonoBehaviour
                     eduRigidBody lineRB = line.gameObject.GetComponent<eduRigidBody>();
 
                     Vector2 diff = (Vector2)circle.transform.position - line.posMid;
-                    float distance = Vector2.Dot(diff, line.normal);
+                    Vector2 n = line.normal.normalized;
+                    float distance = Vector2.Dot(diff, n);
 
-                    if (distance < 0) //no collision / position correcting if circles comes from the "not solid side of the line"
+                    if (distance < 0) //no collision / position correction if circles comes from the "not solid side of the line"
                         continue;
 
                     //find closest end point of line to the circle
@@ -114,7 +116,7 @@ public class eduCollisionDetection : MonoBehaviour
                     }
 
                     //check if collision point is outside of line segment length
-                    Vector2 collisionPos = (Vector2)circle.transform.position + (-line.normal * distance);
+                    Vector2 collisionPos = (Vector2)circle.transform.position + (-n * distance);
                     if(Vector2.Distance(collisionPos, line.posMid) > Vector2.Distance(closestEndPoint, line.posMid))
                     {
                         //if outside line seg, check collision towards the closest endpoint,
@@ -122,11 +124,11 @@ public class eduCollisionDetection : MonoBehaviour
                         float penetration = circle.radius - distanceToPoint;
                         if(penetration > 0)
                         {
-                            Vector2 n = ((Vector2)circle.transform.position - closestEndPoint).normalized;
+                            Vector2 colN = ((Vector2)circle.transform.position - closestEndPoint).normalized;
                             OverlapCorrection(circleRB, lineRB, penetration, n);
-                            if (Vector2.Dot(circleRB.velocity, n) < 0)
+                            if (Vector2.Dot(circleRB.velocity, colN) < 0)
                             {
-                                CircleLineCollision(closestEndPoint, n, circleRB);
+                                CircleLineCollision(closestEndPoint, colN, circleRB);
                             }
                             
                         }
@@ -137,10 +139,10 @@ public class eduCollisionDetection : MonoBehaviour
                         float penetration = circle.radius - distance;
                         if (penetration > 0 && distance > 0)
                         {
-                            OverlapCorrection(circleRB, lineRB, penetration, line.normal);
-                            if(Vector2.Dot(circleRB.velocity, line.normal) < 0)
+                            OverlapCorrection(circleRB, lineRB, penetration, n);
+                            if(Vector2.Dot(circleRB.velocity, n) < 0)
                             {
-                                CircleLineCollision(collisionPos, line.normal, circleRB);
+                                CircleLineCollision(collisionPos, n, circleRB);
                             }
                         }
                     }

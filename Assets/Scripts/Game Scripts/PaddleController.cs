@@ -1,27 +1,40 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PaddleController : MonoBehaviour
 {
-    PaddleInput input;
-    [SerializeField] float moveSpeed = 1f;
-
-    void Start()
-    {
-        input = new PaddleInput();
-        input.Enable();
-    }
+    [SerializeField] float paddleHalfWidth = 0.5f;
 
     void Update()
     {
-        Vector3 moveVector = Vector3.zero;
-        if(input.Paddle.Right.IsPressed())
-        {
-            moveVector.x += 1;
-        }
-        if(input.Paddle.Left.IsPressed())
-        {
-            moveVector.x -= 1;
-        }
-        transform.position += moveVector * moveSpeed * Time.deltaTime;
+        Vector2 mousePos =
+            Mouse.current.position.ReadValue();
+
+        Vector3 worldPos =
+            Camera.main.ScreenToWorldPoint(
+                new Vector3(mousePos.x, mousePos.y, 10f)
+            );
+
+        float screenHalfWidth =
+            Camera.main.orthographicSize *
+            Camera.main.aspect;
+
+        float camX =
+            Camera.main.transform.position.x;
+
+        float minX =
+            camX - screenHalfWidth + paddleHalfWidth;
+
+        float maxX =
+            camX + screenHalfWidth - paddleHalfWidth;
+
+        float clampedX =
+            Mathf.Clamp(worldPos.x, minX, maxX);
+
+        transform.position = new Vector3(
+            clampedX,
+            transform.position.y,
+            0f
+        );
     }
 }

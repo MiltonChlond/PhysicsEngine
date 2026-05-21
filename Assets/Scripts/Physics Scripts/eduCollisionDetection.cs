@@ -8,6 +8,8 @@ public class eduCollisionDetection : MonoBehaviour
     eduLineSegmentCollider[] lineSegCol;
     eduPlaneCollider[] planeCol;
 
+    [SerializeField] eduCollisionHandler collisionHandler;
+
     void Start()
     {
         circleCol = FindObjectsByType<eduCircleCollider>(FindObjectsSortMode.None);
@@ -17,6 +19,10 @@ public class eduCollisionDetection : MonoBehaviour
 
     void FixedUpdate()
     {
+        circleCol = FindObjectsByType<eduCircleCollider>(FindObjectsSortMode.None);
+        lineSegCol = FindObjectsByType<eduLineSegmentCollider>(FindObjectsSortMode.None);
+        planeCol = FindObjectsByType<eduPlaneCollider>(FindObjectsSortMode.None);
+
         CircleCircleCheck();
         CirclePlaneCheck();
         CircleLineCheck();
@@ -125,9 +131,10 @@ public class eduCollisionDetection : MonoBehaviour
                         if(penetration > 0)
                         {
                             Vector2 colN = ((Vector2)circle.transform.position - closestEndPoint).normalized;
-                            OverlapCorrection(circleRB, lineRB, penetration, n);
+                            OverlapCorrection(circleRB, lineRB, penetration, colN);
                             if (Vector2.Dot(circleRB.velocity, colN) < 0)
                             {
+                                collisionHandler.HandleCollision(circleRB, lineRB);
                                 CircleLineCollision(closestEndPoint, colN, circleRB);
                             }
                             
@@ -142,6 +149,7 @@ public class eduCollisionDetection : MonoBehaviour
                             OverlapCorrection(circleRB, lineRB, penetration, n);
                             if(Vector2.Dot(circleRB.velocity, n) < 0)
                             {
+                                collisionHandler.HandleCollision(circleRB, lineRB);
                                 CircleLineCollision(collisionPos, n, circleRB);
                             }
                         }

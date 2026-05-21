@@ -44,7 +44,7 @@ public class eduExplosionPoint : MonoBehaviour
 
             float powerFalloff = 1 - (distance / explosionRadius);
 
-            Vector2 impulse = direction * explosionPower / rb.mass;
+            Vector2 impulse = direction * explosionPower * powerFalloff / rb.mass;
             rb.ApplyImpulse(impulse);
             StartCoroutine(MakeExplosionVisible());
         }

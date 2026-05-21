@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
-    enum BrickType
+    [SerializeField] GameManager gameManager;
+
+    public enum BrickType
     {
         Normal,
         Explosive
@@ -11,12 +13,13 @@ public class Brick : MonoBehaviour
 
     [SerializeField] SpriteRenderer sprite;
 
-    BrickType type;
-    bool isAlive;
+    public BrickType type;
+    public bool isAlive;
     int hp;
 
     void Start()
     {
+        gameManager = GameObject.FindFirstObjectByType<GameManager>();
         isAlive = true;
         DecideTypeOfBrick();
         SetColor();
@@ -40,6 +43,7 @@ public class Brick : MonoBehaviour
         hp -= 1;
         if(hp <= 0)
         {
+            gameManager.BrickDestroyed();
             OnDeath();
             return;
         }
@@ -49,7 +53,9 @@ public class Brick : MonoBehaviour
 
     void SetColor()
     {
-        if (hp == 1)
+        if (type == BrickType.Explosive)
+            sprite.color = Color.black;
+        else if (hp == 1)
             sprite.color = Color.green;
         else if (hp == 2)
             sprite.color = Color.yellow;
@@ -60,14 +66,5 @@ public class Brick : MonoBehaviour
     void OnDeath()
     {
         isAlive = false;
-        if(type == BrickType.Explosive)
-        {
-            //kaboom
-        }
-    }
-
-    void Update()
-    {
-        
     }
 }

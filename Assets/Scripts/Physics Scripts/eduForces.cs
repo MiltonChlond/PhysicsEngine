@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class eduForces : MonoBehaviour
 {
@@ -73,6 +74,21 @@ public class eduForces : MonoBehaviour
         foreach (eduExplosionPoint explosion in explosionPoints)
         {
             explosion.UpdateExplosions(RBs);
+        }
+    }
+
+    public void ApplyExplosionForce(eduRigidBody rb, eduExplosion explosion)
+    {
+        float distance = Vector2.Distance(explosion.pos, rb.transform.position);
+        if (distance < explosion.explosionRadius) //within explosion
+        {
+            Vector2 direction = ((Vector2)rb.transform.position - (Vector2)explosion.pos).normalized;
+
+            float powerFalloff = 1 - (distance / explosion.explosionRadius);
+
+            Vector2 impulse = direction * explosion.explosionPower * powerFalloff / rb.mass;
+            rb.ApplyImpulse(impulse);
+            //StartCoroutine(MakeExplosionVisible());
         }
     }
 
